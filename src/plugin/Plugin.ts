@@ -11,9 +11,9 @@ export class Plugin {
 	disabled: boolean;
 	fileName: string;
 	configFileName: string;
-	__v: number;
 	createdAt: Date;
-	lastUpdated: Date;
+	lastUpdatedAt: Date;
+	raw: PluginResponse;
 	
 	constructor(plugin: PluginResponse) {
 		this.id = plugin._id;
@@ -26,8 +26,10 @@ export class Plugin {
 		this.disabled = plugin.disabled;
 		this.fileName = plugin.file_name;
 		this.configFileName = plugin.config_file_name;
-		this.__v = plugin.__v;
+
 		this.createdAt = new Date(plugin.created);
-		this.lastUpdated = new Date(plugin.last_updated);
+		this.lastUpdatedAt = new Date(plugin.last_updated);
+
+		this.raw = plugin;
 	}
 }

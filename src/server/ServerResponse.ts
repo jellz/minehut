@@ -9,7 +9,6 @@ export interface ServerResponse {
 	platform: 'java';
 	__v: number;
 	port: number;
-	dns_id: string;
 	motd: string;
 	visibility: boolean;
 	credits_per_day: number;
@@ -20,12 +19,15 @@ export interface ServerResponse {
 	suspended: boolean;
 
 	purchased_icons: string[];
+
+	active_icon: string; // id
+	icon: string; // name
+
 	active_plugins: string[];
 	purchased_plugins: string[];
 	plugins_loaded: string[];
-	
+
 	online: boolean;
 	maxPlayers: number;
 	playerCount: number;
-	players: string[];
 }

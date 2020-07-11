@@ -1,6 +1,5 @@
 import { ServerResponse } from './ServerResponse';
 import { ServerProperties } from './ServerProperties';
-import { Icon } from '../icon/Icon';
 import { Minehut } from '../Minehut';
 
 export class Server {
@@ -14,7 +13,6 @@ export class Server {
 	platform: 'java';
 	__v: number;
 	port: number;
-	dnsId: string;
 	motd: string;
 	visibility: boolean;
 	creditsPerDay: number;
@@ -23,15 +21,12 @@ export class Server {
 	offer: string;
 	serverProperties: ServerProperties;
 	suspended: boolean;
-	// need to make these types
-	purchasedIcons: (Icon | undefined)[];
-	// activePlugins: Plugin[];
-	// purchasedPlugins: Plugin[];
-	// pluginsLoaded: Plugin[];
+
 	online: boolean;
 	maxPlayers: number;
 	playerCount: number;
-	players: string[];
+
+	raw: ServerResponse;
 
 	constructor(server: ServerResponse, client: Minehut) {
 		this.client = client;
@@ -44,7 +39,6 @@ export class Server {
 		this.platform = server.platform;
 		this.__v = server.__v;
 		this.port = server.port;
-		this.dnsId = server.dns_id;
 		this.motd = server.motd;
 		this.visibility = server.visibility;
 		this.creditsPerDay = server.credits_per_day;
@@ -54,17 +48,24 @@ export class Server {
 		this.serverProperties = server.server_properties;
 		this.suspended = server.suspended;
 
-		// this.purchasedIcons = this.getPurchasedIcons(server.purchased_icons);
-		this.purchasedIcons = this.getPurchasedIcons(server.purchased_icons);
-
 		this.online = server.online;
 		this.maxPlayers = server.maxPlayers;
 		this.playerCount = server.playerCount;
-		this.players = server.players;
+
+		this.raw = server;
 	}
 
-	private getPurchasedIcons(purchasedIcons: string[]) {
-		const icons = this.client.icons.get(purchasedIcons);
-		return Array.isArray(icons) ? icons : [icons];
+	async getPurchasedIcons() {
+		return await this.client.icons.fetch(this.raw.purchased_icons);
 	}
+
+	async getActiveIcon() {
+		return (await this.client.icons.fetch([this.raw.active_icon]))[0];
+	}
+
+	async getActivePlugins() {
+		return await this.client.plugins.fetch(this.raw.active_plugins);
+	}
+
+	
 }

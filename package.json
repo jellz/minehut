@@ -8,9 +8,7 @@
   "license": "MIT",
   "types": "dist/index.d.ts",
   "dependencies": {
-    "class-transformer": "^0.2.3",
-    "node-fetch": "^2.6.0",
-    "reflect-metadata": "^0.1.13"
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@types/node-fetch": "^2.5.6",

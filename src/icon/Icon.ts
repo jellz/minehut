@@ -8,9 +8,11 @@ export class Icon {
 	rank: string;
 	available: boolean;
 	disabled: boolean;
-	__v: number;
-	created: Date;
-	lastUpdated: Date;
+	
+	createdAt: Date;
+	lastUpdatedAt: Date;
+
+	raw: IconResponse;
 
 	constructor(icon: IconResponse) {
 		this.id = icon._id;
@@ -20,8 +22,10 @@ export class Icon {
 		this.rank = icon.rank;
 		this.available = icon.available;
 		this.disabled = icon.disabled;
-		this.__v = icon.__v;
-		this.created = new Date(icon.created);
-		this.lastUpdated = new Date(icon.last_updated);
+
+		this.createdAt = new Date(icon.created);
+		this.lastUpdatedAt = new Date(icon.last_updated);
+
+		this.raw = icon;
 	}
 }
