@@ -11,6 +11,6 @@ import { Minehut } from './Minehut';
 	const icons = await server.getPurchasedIcons();
 	console.log(icons);
 
-	const plugins = await server.getPlugins();
+	const plugins = await server.getActivePlugins();
 	console.log(plugins.map(p => p.name));
 })();

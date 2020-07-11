@@ -1,6 +1,6 @@
 {
   "name": "minehut",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "TypeScript wrapper for the Minehut HTTP API",
   "main": "src/index.ts",
   "repository": "git@github.com:jellz/minehut",
