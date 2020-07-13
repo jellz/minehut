@@ -10,7 +10,7 @@ export class ServerManager {
 		this.client = client;
 	}
 
-	async get(server: string, byName: boolean = false) {
+	async get(server: string, byName: boolean = true) {
 		const res = await fetch(
 			`${this.client.API_BASE}/server/${server}${byName ? '?byName=true' : ''}`
 		);
