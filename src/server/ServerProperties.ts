@@ -1,4 +1,5 @@
 export interface ServerProperties {
+	[key: string]: string | number | boolean;
 	level_type: string;
 	gamemode: 0 | 1 | 2 | 3;
 	spawn_animals: boolean;
