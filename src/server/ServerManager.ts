@@ -15,7 +15,7 @@ export class ServerManager {
 			`${this.client.API_BASE}/server/${server}${byName ? '?byName=true' : ''}`
 		);
 		// The Minehut API returns 502 for unknown servers (???)
-		if (!res.ok) throw new Error(res.statusText);
+		if (!res.ok) return null;
 		const json = await res.json();
 		const srv: ServerResponse = json.server;
 		return new Server(srv, this.client);
