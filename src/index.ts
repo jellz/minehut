@@ -1,3 +1,1 @@
-import { Minehut } from './Minehut';
-
-export default Minehut;
+export { Minehut } from './Minehut';
