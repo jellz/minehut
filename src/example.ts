@@ -13,4 +13,7 @@ import { Minehut } from './Minehut';
 
 	const plugins = await server.getActivePlugins();
 	console.log(plugins.map(p => p.name));
+
+	const simpleStats = await minehut.getSimpleStats();
+	console.log(simpleStats);
 })();

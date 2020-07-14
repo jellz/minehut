@@ -29,7 +29,7 @@ export class Minehut {
 		const res = await fetch(`${this.API_BASE}/network/simple_stats`);
 		if (!res.ok) throw new Error(res.statusText);
 		const json: SimpleStatsResponse = await res.json();
-		const ramCount = (json.ram_count / 1000).toFixed(1);
+		const ramCount = parseFloat((json.ram_count / 1000).toFixed(1));
 		return {
 			serverCount: json.server_count,
 			serverMax: json.server_max,
