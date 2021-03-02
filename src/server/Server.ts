@@ -64,8 +64,7 @@ export class Server {
 	}
 
 	async getActivePlugins() {
-		return await this.client.plugins.fetch(this.raw.active_plugins);
+		const allPlugins = await this.client.plugins.fetchAll();
+		return allPlugins.filter(p => this.raw.active_plugins.includes(p.id));
 	}
-
-	
 }

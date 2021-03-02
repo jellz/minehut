@@ -4,27 +4,31 @@ import fetch from 'node-fetch';
 import { PluginResponse } from './PluginResponse';
 
 export class PluginManager {
-	private client: Minehut;
-	private store!: Plugin[];
+	private store: Map<string, Plugin> = new Map();
 
-	constructor(client: Minehut) {
-		this.client = client;
-		this.store = [];
+	constructor(public readonly client: Minehut) {}
+
+	async fetch(idOrName: string): Promise<Plugin | null> {
+		if (this.store.size < 1) await this.fetchAll(true);
+		const found = this.storeToArray().find(
+			plugin =>
+				idOrName === plugin.id ||
+				idOrName.toLowerCase() === plugin.name.toLowerCase()
+		);
+		return found ?? null;
 	}
 
-	async fetch(plugins: string[]) {
-		if (this.store.length < 1) await this.fetchAll();
-		const found = this.store.filter(plugin => plugins.includes(plugin.id));
-		if (found.length < 1) return [] as Plugin[];
-		else return found;
-	}
-
-	private async fetchAll() {
+	async fetchAll(force: boolean = false) {
+		if (!force && this.store.size > 0) return this.storeToArray();
 		const res = await fetch(`${this.client.API_BASE}/plugins_public`);
 		if (!res.ok) throw new Error(res.statusText);
 		const pluginsRes: PluginResponse[] = (await res.json()).all;
 		const plugins = pluginsRes.map(i => new Plugin(i));
-		this.store.push(...plugins);
-		return plugins;
+		plugins.forEach(plugin => this.store.set(plugin.id, plugin));
+		return this.storeToArray();
+	}
+
+	storeToArray() {
+		return [...this.store.values()];
 	}
 }
