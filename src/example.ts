@@ -16,4 +16,10 @@ import { Minehut } from './Minehut';
 
 	const simpleStats = await minehut.getSimpleStats();
 	console.log(simpleStats);
+
+	const tuskeSearch = await minehut.plugins.search('Tuske'); // actual name is Skript Addon: TuSKe
+	console.log(`search for Tuske`, tuskeSearch);
+
+	const skriptSearch = await minehut.plugins.search('skript'); // exact match 'Skript'
+	console.log(`search for Skript`, skriptSearch);
 })();

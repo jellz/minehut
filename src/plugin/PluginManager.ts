@@ -18,6 +18,19 @@ export class PluginManager {
 		return found ?? null;
 	}
 
+	/*
+		This method can find plugins by exact match or name fragments (e.g. "Tuske" will resolve to "Skript Addon: TuSKe", while "skript" will resolve to "Skript")
+	*/
+	async search(query: string) {
+		const exact = await this.fetch(query);
+		if (exact) return exact;
+		return (
+			this.storeToArray().find(plugin =>
+				plugin.name.toLowerCase().includes(query.toLowerCase())
+			) || null
+		);
+	}
+
 	async fetchAll(force: boolean = false) {
 		if (!force && this.store.size > 0) return this.storeToArray();
 		const res = await fetch(`${this.client.API_BASE}/plugins_public`);
