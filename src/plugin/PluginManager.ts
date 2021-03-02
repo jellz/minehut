@@ -23,9 +23,9 @@ export class PluginManager {
 	*/
 	async search(query: string) {
 		const exact = await this.fetch(query);
-		if (exact) return exact;
+		if (exact) return [exact];
 		return (
-			this.storeToArray().find(plugin =>
+			this.storeToArray().filter(plugin =>
 				plugin.name.toLowerCase().includes(query.toLowerCase())
 			) || null
 		);
