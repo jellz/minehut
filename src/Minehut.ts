@@ -6,6 +6,7 @@ import fetch from 'node-fetch';
 
 import { SimpleStatsResponse } from './stats/SimpleStatsResponse';
 import { PlayerDistributionResponse } from './stats/PlayerDistributionResponse';
+import { AddonManager } from './addon/AddonManager';
 
 export class Minehut {
 	session: null; // Session in the future
@@ -14,6 +15,7 @@ export class Minehut {
 	icons: IconManager;
 	servers: ServerManager;
 	plugins: PluginManager;
+	addons: AddonManager;
 
 	API_BASE: string;
 
@@ -23,6 +25,7 @@ export class Minehut {
 		this.icons = new IconManager(this);
 		this.servers = new ServerManager(this);
 		this.plugins = new PluginManager(this);
+		this.addons = new AddonManager(this);
 	}
 
 	async getSimpleStats() {
