@@ -1,5 +1,13 @@
 import { ServerProperties } from './ServerProperties';
 
+interface InstalledContent {
+	pinned: boolean;
+	_id: string;
+	content_id: string;
+	content_version_id: string;
+	install_date: string;
+	last_updated: string;
+}
 export interface ServerResponse {
 	_id: string;
 	owner: string;
@@ -23,9 +31,7 @@ export interface ServerResponse {
 	active_icon: string; // id
 	icon: string; // name
 
-	active_plugins: string[];
-	purchased_plugins: string[];
-	plugins_loaded: string[];
+	installed_content: InstalledContent[];
 
 	online: boolean;
 	maxPlayers: number;
