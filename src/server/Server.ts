@@ -63,8 +63,9 @@ export class Server {
 		return (await this.client.icons.fetch([this.raw.active_icon]))[0];
 	}
 
-	async getActivePlugins() {
-		const allPlugins = await this.client.plugins.fetchAll();
-		return allPlugins.filter(p => this.raw.active_plugins.includes(p.id));
+	async getInstalledContent() {
+		const allAddons = await this.client.addons.fetchAll();
+		const installedIds = this.raw.installed_content.map(c => c.content_id);
+		return installedIds.map(id => allAddons.find(a => a.id === id)!);
 	}
 }
