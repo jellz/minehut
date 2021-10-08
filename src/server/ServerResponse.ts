@@ -25,6 +25,7 @@ export interface ServerResponse {
 	offer: string;
 	server_properties: ServerProperties;
 	suspended: boolean;
+	categories: string[];
 
 	purchased_icons: string[];
 
