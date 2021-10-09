@@ -21,6 +21,7 @@ export class Server {
 	offer: string;
 	serverProperties: ServerProperties;
 	suspended: boolean;
+	categories: string[];
 
 	online: boolean;
 	maxPlayers: number;
@@ -47,6 +48,7 @@ export class Server {
 		this.offer = server.offer;
 		this.serverProperties = server.server_properties;
 		this.suspended = server.suspended;
+		this.categories = server.categories;
 
 		this.online = server.online;
 		this.maxPlayers = server.maxPlayers;
