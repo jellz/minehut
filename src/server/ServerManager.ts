@@ -10,9 +10,9 @@ export class ServerManager {
 		this.client = client;
 	}
 
-	async get(server: string, byName: boolean = true) {
+	async get(server: string, query: ServerSearchSettings) {
 		const res = await fetch(
-			`${this.client.API_BASE}/server/${server}${byName ? '?byName=true' : ''}`
+			`${query.dev ? this.client.DEV_API_BASE : this.client.API_BASE}/server/${server}${query.byName ? '?byName=true' : ''}`
 		);
 		// The Minehut API returns 502 for unknown servers (???)
 		if (!res.ok) throw new Error(res.statusText);
@@ -20,4 +20,9 @@ export class ServerManager {
 		const srv: ServerResponse = json.server;
 		return new Server(srv, this.client);
 	}
+}
+
+export interface ServerSearchSettings {
+	byName?: boolean;
+	dev?: boolean;
 }
