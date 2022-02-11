@@ -1,4 +1,4 @@
-import { MINEHUT_API_BASE } from './constants';
+import { DEV_MINEHUT_API_BASE, MINEHUT_API_BASE } from './constants';
 import { ServerManager } from './server/ServerManager';
 import { IconManager } from './icon/IconManager';
 import { PluginManager } from './plugin/PluginManager';
@@ -9,8 +9,6 @@ import { PlayerDistributionResponse } from './stats/PlayerDistributionResponse';
 import { AddonManager } from './addon/AddonManager';
 
 export class Minehut {
-	session: null; // Session in the future
-	user: null; // User/ClientUser in the future
 
 	icons: IconManager;
 	servers: ServerManager;
@@ -19,8 +17,12 @@ export class Minehut {
 
 	API_BASE: string;
 
-	constructor() {
-		this.API_BASE = MINEHUT_API_BASE;
+	constructor(settings: MinehutSettings = { dev: false }) {
+		if(settings.dev) {
+			this.API_BASE = DEV_MINEHUT_API_BASE
+		}else {
+			this.API_BASE = MINEHUT_API_BASE
+		}
 
 		this.icons = new IconManager(this);
 		this.servers = new ServerManager(this);
@@ -59,4 +61,8 @@ export class Minehut {
 			},
 		};
 	}
+}
+
+export interface MinehutSettings {
+	dev?: boolean;
 }
