@@ -2,8 +2,11 @@ import { Minehut } from './Minehut';
 
 (async function () {
 	const minehut = new Minehut();
-	const server = await minehut.servers.get('dangerZONE', true);
+	const server = await minehut.servers.get('dangerZONE', { byName: true });
 	console.log(server);
+
+	const devServer = await minehut.servers.get('test256', { byName: true, dev: true });
+	console.log(devServer);
 
 	const icon = await server.getActiveIcon();
 	console.log(`active icon ${JSON.stringify(icon)}`);
