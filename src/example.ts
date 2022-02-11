@@ -5,6 +5,10 @@ import { Minehut } from './Minehut';
 	const server = await minehut.servers.get('dangerZONE', true);
 	console.log(server);
 
+	const devMinehut = new Minehut({ dev: true });
+	const devServer = await devMinehut.servers.get('test256', true);
+	console.log(devServer);
+
 	const icon = await server.getActiveIcon();
 	console.log(`active icon ${JSON.stringify(icon)}`);
 
