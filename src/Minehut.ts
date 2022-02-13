@@ -18,11 +18,7 @@ export class Minehut {
 	API_BASE: string;
 
 	constructor(settings: MinehutSettings = { dev: false }) {
-		if(settings.dev) {
-			this.API_BASE = DEV_MINEHUT_API_BASE
-		}else {
-			this.API_BASE = MINEHUT_API_BASE
-		}
+		this.API_BASE = settings.dev ? DEV_MINEHUT_API_BASE : MINEHUT_API_BASE;
 
 		this.icons = new IconManager(this);
 		this.servers = new ServerManager(this);
