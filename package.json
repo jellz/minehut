@@ -16,6 +16,7 @@
 		"typescript": "^3.8.3"
 	},
 	"scripts": {
-		"prepublish": "tsc"
+		"prepublish": "tsc",
+		"example": "ts-node ./src/example.ts"
 	}
 }

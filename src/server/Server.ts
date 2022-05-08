@@ -1,5 +1,4 @@
 import { ServerResponse } from './ServerResponse';
-import { ServerProperties } from './ServerProperties';
 import { Minehut } from '../Minehut';
 
 export class Server {
@@ -19,9 +18,12 @@ export class Server {
 	storageNode: string;
 	lastOnline: Date;
 	offer: string;
-	serverProperties: ServerProperties;
 	suspended: boolean;
 	categories: string[];
+	connectedServers: string[];
+	proxy: boolean;
+	serverPlan: string;
+	serverType: string;
 
 	online: boolean;
 	maxPlayers: number;
@@ -46,9 +48,12 @@ export class Server {
 		this.storageNode = server.storage_node;
 		this.lastOnline = new Date(server.last_online);
 		this.offer = server.offer;
-		this.serverProperties = server.server_properties;
 		this.suspended = server.suspended;
 		this.categories = server.categories;
+		this.connectedServers = server.connectedServers;
+		this.proxy = server.proxy;
+		this.serverPlan = server.server_plan;
+		this.serverType = server.server_version_type;
 
 		this.online = server.online;
 		this.maxPlayers = server.maxPlayers;
@@ -63,11 +68,5 @@ export class Server {
 
 	async getActiveIcon() {
 		return (await this.client.icons.fetch([this.raw.active_icon]))[0];
-	}
-
-	async getInstalledContent() {
-		const allAddons = await this.client.addons.fetchAll();
-		const installedIds = this.raw.installed_content.map(c => c.content_id);
-		return installedIds.map(id => allAddons.find(a => a.id === id)!);
 	}
 }

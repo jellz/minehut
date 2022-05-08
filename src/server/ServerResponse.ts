@@ -1,13 +1,3 @@
-import { ServerProperties } from './ServerProperties';
-
-interface InstalledContent {
-	pinned: boolean;
-	_id: string;
-	content_id: string;
-	content_version_id: string;
-	install_date: string;
-	last_updated: string;
-}
 export interface ServerResponse {
 	_id: string;
 	owner: string;
@@ -23,16 +13,17 @@ export interface ServerResponse {
 	storage_node: string;
 	last_online: number;
 	offer: string;
-	server_properties: ServerProperties;
 	suspended: boolean;
 	categories: string[];
+	connectedServers: string[];
+	proxy: boolean;
+	server_plan: string;
+	server_version_type: string;
 
 	purchased_icons: string[];
 
 	active_icon: string; // id
 	icon: string; // name
-
-	installed_content: InstalledContent[];
 
 	online: boolean;
 	maxPlayers: number;
