@@ -1,19 +1,20 @@
 import { DEV_MINEHUT_API_BASE, MINEHUT_API_BASE } from './constants';
 import { ServerManager } from './server/ServerManager';
 import { IconManager } from './icon/IconManager';
-import { PluginManager } from './plugin/PluginManager';
 import fetch from 'node-fetch';
 
 import { SimpleStatsResponse } from './stats/SimpleStatsResponse';
 import { PlayerDistributionResponse } from './stats/PlayerDistributionResponse';
 import { AddonManager } from './addon/AddonManager';
+import { MakerManager } from './maker/MakerManager';
+import { HomePageStatsResponse } from './stats/HomePageStatsResponse';
 
 export class Minehut {
 
 	icons: IconManager;
 	servers: ServerManager;
-	plugins: PluginManager;
 	addons: AddonManager;
+	makers: MakerManager;
 
 	API_BASE: string;
 
@@ -22,8 +23,8 @@ export class Minehut {
 
 		this.icons = new IconManager(this);
 		this.servers = new ServerManager(this);
-		this.plugins = new PluginManager(this);
 		this.addons = new AddonManager(this);
+		this.makers = new MakerManager();
 	}
 
 	async getSimpleStats() {
@@ -55,6 +56,16 @@ export class Minehut {
 				lobby: json.javaLobby,
 				playerServer: json.javaPlayerServer,
 			},
+		};
+	}
+
+	async getHomePageStats() {
+		const res = await fetch(`${this.API_BASE}/network/homepage_stats`);
+		if(!res.ok) throw new Error(res.statusText);
+		const json: HomePageStatsResponse = await res.json();
+		return {
+			serverCount: json.server_count,
+			userCount: json.user_count,
 		};
 	}
 }

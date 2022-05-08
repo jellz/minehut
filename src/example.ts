@@ -15,15 +15,24 @@ import { Minehut } from './Minehut';
 	const icons = await server.getPurchasedIcons();
 	console.log(icons);
 
-	const plugins = await server.getInstalledContent();
-	console.log(plugins.map(p => p.title));
-
 	const simpleStats = await minehut.getSimpleStats();
 	console.log(simpleStats);
 
-	const tuskeSearch = await minehut.plugins.search('Tuske'); // actual name is Skript Addon: TuSKe
+	const playerDistribution = await minehut.getPlayerDistribution();
+	console.log(playerDistribution);
+
+	const homepageStats = await minehut.getHomePageStats();
+	console.log(homepageStats);
+
+	const tuskeSearch = await minehut.addons.search('Tuske'); // actual name is Skript Addon: TuSKe
 	console.log(`search for Tuske`, tuskeSearch);
 
-	const skriptSearch = await minehut.plugins.search('skript'); // exact match 'Skript'
+	const skriptSearch = await minehut.addons.search('skript'); // exact match 'Skript'
 	console.log(`search for Skript`, skriptSearch);
+
+	const maker = await minehut.makers.get('senior-team');
+	console.log(`search for senior-team`, maker);
+	
+	const makerProducts = await minehut.makers.getProductList('pelican');
+	console.log(makerProducts);
 })();
