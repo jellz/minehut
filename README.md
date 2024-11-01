@@ -6,7 +6,6 @@ Install minehut with [NPM](https://npmjs.com)
 
 ```bash
   npm install minehut
-  cd my-project
 ```
 
 ## Features
