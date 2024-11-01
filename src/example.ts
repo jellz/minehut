@@ -2,18 +2,29 @@ import { Minehut } from './Minehut';
 
 (async function () {
 	const minehut = new Minehut();
-	const server = await minehut.servers.get('dangerZONE', true);
+	const server = await minehut.servers.get('Lifesteal');
 	console.log(server);
+    console.log(`Daily Time Left: ${server.getDailyTimeLeft()}`);
 
 	const devMinehut = new Minehut({ dev: true });
 	const devServer = await devMinehut.servers.get('test256', true);
 	console.log(devServer);
 
 	const icon = await server.getActiveIcon();
-	console.log(`active icon ${JSON.stringify(icon)}`);
+	console.log(`Active Icon ${icon.iconName}`);
 
 	const icons = await server.getPurchasedIcons();
 	console.log(icons);
+
+    const availableIcons = await minehut.icons.fetchAvailable();
+    console.log(availableIcons);
+
+    const categories = await minehut.servers.getServerCategories({ fromCache: true });
+    console.log(categories);
+
+    const cakeIcon = await minehut.icons.get('Cake'); 
+    console.log(cakeIcon);
+    console.log(`Cake Icon Image: ${cakeIcon?.imageUrl}`);
 
 	const simpleStats = await minehut.getSimpleStats();
 	console.log(simpleStats);
@@ -24,15 +35,12 @@ import { Minehut } from './Minehut';
 	const homepageStats = await minehut.getHomePageStats();
 	console.log(homepageStats);
 
-	const tuskeSearch = await minehut.addons.search('Tuske'); // actual name is Skript Addon: TuSKe
-	console.log(`search for Tuske`, tuskeSearch);
+    const resourcePack = await minehut.getResourcePack();
+    console.log(resourcePack);
 
-	const skriptSearch = await minehut.addons.search('skript'); // exact match 'Skript'
-	console.log(`search for Skript`, skriptSearch);
+    const player = await minehut.players.get('_Tarna_');
+    console.log(player);
 
-	const maker = await minehut.makers.get('senior-team');
-	console.log(`search for senior-team`, maker);
-	
-	const makerProducts = await minehut.makers.getProductList('pelican');
-	console.log(makerProducts);
+    const filteredServers = await minehut.servers.getOnlineServers({ category: 'box', limit: 1 });
+    console.log(filteredServers);
 })();

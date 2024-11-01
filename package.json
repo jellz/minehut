@@ -1,10 +1,21 @@
 {
 	"name": "minehut",
-	"version": "0.0.64",
+	"version": "0.0.66",
 	"description": "TypeScript wrapper for the Minehut HTTP API",
 	"main": "./dist/index.js",
 	"repository": "git@github.com:jellz/minehut",
 	"author": "Daniel Gulic <danielgulic@gmail.com>",
+    "contributors": [
+        {
+            "name": "Daniel Gulic",
+            "email": "danielgulic@gmail.com"
+        },
+        {
+            "name": "Tarna",
+            "email": "tarna652@gmail.com"
+        }
+    ],
+    "bugs": "https://github.com/jellz/minehut/issues",
 	"license": "MIT",
 	"types": "dist/index.d.ts",
 	"dependencies": {

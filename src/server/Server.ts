@@ -1,6 +1,11 @@
-import { ServerResponse } from './ServerResponse';
+import { ServerDeletion, ServerResponse } from './ServerResponse';
 import { Minehut } from '../Minehut';
+import { DAILY_ONLINE_TIME } from '../constants';
+import { prettyPlan, ServerPlan } from '../utils/functions';
 
+/**
+ * Represents a Minehut Server
+ */
 export class Server {
 	client: Minehut;
 
@@ -23,15 +28,27 @@ export class Server {
 	connectedServers: string[];
 	proxy: boolean;
 	serverPlan: string;
+    activeServerPlan: string;
+    rawPlan: string;
+    prettyPlan: ServerPlan;
 	serverType: string;
+
+    defaultBannerImage: string;
+    defaultBannerTint: string;
 
 	online: boolean;
 	maxPlayers: number;
 	playerCount: number;
+    hidden: boolean;
+    expired: boolean;
+    usingCosmetics: boolean;
+    joins: number;
+
+    dailyOnlineTime: Record<string, number>;
+    deletion: ServerDeletion;
 
 	raw: ServerResponse;
-
-	constructor(server: ServerResponse, client: Minehut) {
+	constructor(client: Minehut, server: ServerResponse) {
 		this.client = client;
 
 		this.id = server._id;
@@ -53,20 +70,71 @@ export class Server {
 		this.connectedServers = server.connectedServers;
 		this.proxy = server.proxy;
 		this.serverPlan = server.server_plan;
+        this.activeServerPlan = server.activeServerPlan;
+        this.rawPlan = server.rawPlan;
+        this.prettyPlan = prettyPlan(this.serverPlan);
 		this.serverType = server.server_version_type;
+
+        this.defaultBannerImage = server.default_banner_image;
+        this.defaultBannerTint = server.default_banner_tint;
 
 		this.online = server.online;
 		this.maxPlayers = server.maxPlayers;
 		this.playerCount = server.playerCount;
+        this.hidden = server.hidden;
+        this.expired = server.expired;
+        this.usingCosmetics = server.using_cosmetics;
+        this.joins = server.joins;
+
+        this.dailyOnlineTime = server.daily_online_time;
+        this.deletion = server.deletion;
 
 		this.raw = server;
 	}
 
+    /**
+     * Gets a list of the server's purchased icons
+     * @returns {Promise<Icon[]>}
+     * @example const icons = await server.getPurchasedIcons();
+     */
 	async getPurchasedIcons() {
 		return await this.client.icons.fetch(this.raw.purchased_icons);
 	}
 
+    /**
+     * Gets the server's active icon
+     * @returns {Promise<Icon>}
+     * @example const activeIcon = await server.getActiveIcon();
+     */
 	async getActiveIcon() {
 		return (await this.client.icons.fetch([this.raw.active_icon]))[0];
 	}
+
+    /**
+     * Gets the time in milliseconds of how much of the daily online time has been used. 
+     * 
+     * Returns -1 if the server is not a Starter server.
+     * @returns {Promise<number>}
+     * @example const timeUsed = await server.getDailyTimeUsed();
+     */
+    async getDailyTimeUsed() {
+        if (this.activeServerPlan !== 'Starter') return -1;
+        return DAILY_ONLINE_TIME - (await this.getDailyTimeLeft());
+    }
+
+    /**
+     * Gets the time in milliseconds of how much of the daily online time is left. 
+     * 
+     * Returns -1 if the server is not a Starter server.
+     * @returns {Promise<number>}
+     * @example const timeLeft = await server.getDailyTimeLeft();
+     */
+    async getDailyTimeLeft() {
+        if (this.activeServerPlan !== 'Starter') return -1;
+        const now = new Date();
+        const timeSinceLastOnline = now.getTime() - this.lastOnline.getTime();
+        let value = Object.values(this.raw.daily_online_time)[0];
+        if (this.online) value += timeSinceLastOnline;
+        return value ? DAILY_ONLINE_TIME - value : DAILY_ONLINE_TIME;
+    }
 }
