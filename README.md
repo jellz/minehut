@@ -33,6 +33,9 @@ async function main() {
 
 For more examples, visit [example.ts](https://github.com/jellz/minehut/blob/master/src/example.ts).
 
+## Notice
+Due to the server list endpoint being protected by Cloudflare, the `minehut.servers.getOnlineServers()` method will only work with the puppeteer option set to true when using Node.js. It will work fine if you are using Bun.
+
 ## Contributing
 Contributions are always welcome!
 
