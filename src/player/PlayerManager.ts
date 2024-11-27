@@ -32,7 +32,7 @@ export class PlayerManager {
         let rank: MinehutRank = 'DEFAULT';
         let isOnline = false;
 
-        const first = friends.friends[0];
+        const first = friends[0];
         if (first) {
             const player = await fetch(`${this.client.API_BASE}/network/player/${first.uuid}/friends`);
             if (!player.ok) throw new Error(player.statusText);
@@ -48,7 +48,7 @@ export class PlayerManager {
     /**
      * Get a list of friends of a player
      * @param player the username or UUID of the player
-     * @returns {Promise<FriendsResponse>}
+     * @returns {Promise<Friend[]>}
      * @throws {Error} If the request fails
      * @example const friends = await minehut.players.getFriends('Santio71');
      */
@@ -57,7 +57,7 @@ export class PlayerManager {
         const res = await fetch(`${this.client.API_BASE}/network/player/${uuid}/friends`);
 		if (!res.ok) throw new Error(res.statusText);
 		const friends: FriendsResponse = await res.json();
-        return friends;
+        return friends.friends;
     }
 
     /**
