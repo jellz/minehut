@@ -55,6 +55,12 @@ export class IconManager {
 		return data;
 	}
 
+    /**
+     * Fetch a list of all icons in the Minehut store
+     * @returns {Promise<Icon[]>}
+     * @throws {Error} If the request fails
+     * @example const icons = await minehut.icons.fetchAll();
+     */
 	async fetchAll() {
 		const res = await fetch(`${this.client.API_BASE}/servers/icons`);
 		if (!res.ok) throw new Error(res.statusText);
