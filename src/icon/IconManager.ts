@@ -55,12 +55,12 @@ export class IconManager {
 		return data;
 	}
 
-	private async fetchAll() {
+	async fetchAll() {
 		const res = await fetch(`${this.client.API_BASE}/servers/icons`);
 		if (!res.ok) throw new Error(res.statusText);
 		const iconsRes: IconResponse[] = await res.json();
 		const icons = iconsRes.map(i => new Icon(this.client, i));
-		this.store.push(...icons);
+        if (this.store.length < 1) this.store.push(...icons);
 		return icons;
 	}
 }
