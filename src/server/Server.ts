@@ -114,22 +114,22 @@ export class Server {
      * Gets the time in milliseconds of how much of the daily online time has been used. 
      * 
      * Returns -1 if the server is not a Starter server.
-     * @returns {Promise<number>}
+     * @returns {number}
      * @example const timeUsed = await server.getDailyTimeUsed();
      */
-    async getDailyTimeUsed() {
+    getDailyTimeUsed() {
         if (this.activeServerPlan !== 'Starter') return -1;
-        return DAILY_ONLINE_TIME - (await this.getDailyTimeLeft());
+        return DAILY_ONLINE_TIME - this.getDailyTimeLeft();
     }
 
     /**
      * Gets the time in milliseconds of how much of the daily online time is left. 
      * 
      * Returns -1 if the server is not a Starter server.
-     * @returns {Promise<number>}
+     * @returns {number}
      * @example const timeLeft = await server.getDailyTimeLeft();
      */
-    async getDailyTimeLeft() {
+    getDailyTimeLeft() {
         if (this.activeServerPlan !== 'Starter') return -1;
         const now = new Date();
         const timeSinceLastOnline = now.getTime() - this.lastOnline.getTime();
