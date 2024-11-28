@@ -2,12 +2,13 @@ import { MINEHUT_DEV_API_BASE, MINEHUT_API_BASE } from './constants';
 import { ServerManager } from './server/ServerManager';
 import { IconManager } from './icon/IconManager';
 import fetch from 'node-fetch';
-
 import { SimpleStatsResponse } from './stats/SimpleStatsResponse';
 import { PlayerDistributionResponse } from './stats/PlayerDistributionResponse';
 import { HomePageStatsResponse } from './stats/HomePageStatsResponse';
 import { ResourcePackResponse } from './stats/ResourcePackResponse';
 import { PlayerManager } from './player/PlayerManager';
+import { compareSemanticVersions, getBedrockVersion, MinehutStatus } from './utils/functions';
+import { Rank } from './stats/RankResponse';
 
 /**
  * The Minehut API client
@@ -127,6 +128,72 @@ export class Minehut {
         const json: ResourcePackResponse = await res.json();
         return json;
     }
+
+    /**
+     * Get the status of the Minehut network
+     * @returns {Promise<MinehutStatus>}
+     * @example const status = await minehut.getMinehutStatus();
+     */
+    async getMinehutStatus() {
+		const data: MinehutStatus = {
+			minecraft_java: 'Working',
+			minecraft_bedrock: 'Working',
+			minecraft_proxy: 'Working',
+			api: 'Working',
+			bedrock_version: '?',
+			latest_bedrock_version: '?'
+		};
+
+		const network = await this.getSimpleStats();
+		const distribution = await this.getPlayerDistribution();
+		if (network == null) data.api = 'Offline';
+
+		// Bedrock handling
+		if (distribution.bedrock.total < 50) data.minecraft_bedrock = 'Degraded';
+		if (distribution.bedrock.total== 0) data.minecraft_bedrock = 'Offline';
+
+		// Java handling
+		if (distribution.java.total < 1000) data.minecraft_java = 'Degraded';
+		if (distribution.java.total == 0) data.minecraft_java = 'Offline';
+
+		const proxy = await fetch('https://mcapi.us/server/status?ip=minehut.com');
+		if (!proxy.ok) data.minecraft_proxy = 'Offline';
+		const proxyJson = await proxy.json();
+		if (!proxyJson.online) data.minecraft_proxy = 'Offline';
+
+		const bedrock = await fetch('https://api.mcsrvstat.us/bedrock/2/bedrock.minehut.com');
+		if (!bedrock.ok) data.minecraft_bedrock = 'Offline';
+		const bedrockJson = await bedrock.json();
+		if (!bedrockJson.online) data.minecraft_bedrock = 'Offline';
+
+		// Compare bedrock proxy to latest bedrock version
+		const latestVersion = await getBedrockVersion();
+		if (latestVersion == null) return data;
+
+		if (!bedrockJson.version) {
+			data.bedrock_version = 'Unknown';
+			data.minecraft_bedrock = 'Working';
+		} else if (compareSemanticVersions(bedrockJson.version, latestVersion) == -1) {
+			data.minecraft_bedrock = 'Outdated';
+			data.latest_bedrock_version = latestVersion;
+			data.bedrock_version = bedrockJson.version || '?';
+		}
+
+		return data;
+	}
+
+    /**
+     * Get the ranks of the Minehut network
+     * @returns {Promise<Rank[]>}
+     * @throws {Error} If the request fails
+     * @example const ranks = await minehut.getRanks();
+     */
+	async getRanks() {
+		const res = await fetch(`${this.API_BASE}/network/ranks`);
+		if (!res.ok) throw new Error(`Failed to fetch ranks: ${res.statusText}`);
+		const json: Rank[] = await res.json();
+		return json;
+	}
 }
 
 export interface MinehutSettings {
