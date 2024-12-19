@@ -1,9 +1,7 @@
-import fetch from 'node-fetch';
 import { Minehut } from '../Minehut';
 import { isUUID, uuidWithDashes } from '../utils/functions';
 import { Player } from './Player';
 import { MojangProfileResponse } from './MojangProfileResponse';
-import { FriendsResponse } from './FriendResponse';
 import { CosmeticResponse, MinehutRank } from './CosmeticResponse';
 
 /**
@@ -26,38 +24,13 @@ export class PlayerManager {
         const uuid = isUUID(player) ? player : await this.getUUID(player, !player.includes('-'));
         if (!uuid) throw new Error('Invalid player');
 
-        const friends = await this.getFriends(uuid);
         const cosmetics = await this.getCosmetics(uuid);
 
         let rank: MinehutRank = 'DEFAULT';
-        let isOnline = false;
-
-        const first = friends[0];
-        if (first) {
-            const player = await fetch(`${this.client.API_BASE}/network/player/${first.uuid}/friends`);
-            if (!player.ok) throw new Error(player.statusText);
-            const json: FriendsResponse = await player.json();
-            const friend = json.friends.find(f => f.uuid === uuid);
-            rank = friend ? friend.rank : 'DEFAULT';
-            isOnline = friend ? friend.online : false;
+        if (cosmetics.rank) {
+            rank = cosmetics.rank;
         }
-
-        return new Player(this.client, uuid, friends, cosmetics, rank, isOnline);
-    }
-
-    /**
-     * Get a list of friends of a player
-     * @param player the username or UUID of the player
-     * @returns {Promise<Friend[]>}
-     * @throws {Error} If the request fails
-     * @example const friends = await minehut.players.getFriends('Santio71');
-     */
-    async getFriends(player: string) {
-        const uuid = isUUID(player) ? player : await this.getUUID(player, !player.includes('-'));
-        const res = await fetch(`${this.client.API_BASE}/network/player/${uuid}/friends`);
-		if (!res.ok) throw new Error(res.statusText);
-		const friends: FriendsResponse = await res.json();
-        return friends.friends;
+        return new Player(this.client, uuid, cosmetics, rank);
     }
 
     /**

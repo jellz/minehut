@@ -1,6 +1,5 @@
 import { Minehut } from '../Minehut';
 import { Icon } from './Icon';
-import fetch from 'node-fetch';
 import { IconResponse, IconsAvailableResponse } from './IconResponse';
 
 /**

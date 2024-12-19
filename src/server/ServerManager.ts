@@ -1,5 +1,4 @@
 import { Minehut } from '../Minehut';
-import fetch from 'node-fetch';
 import { Server } from './Server';
 import { CategoryListResponse, CategoryListResponseItem, ServerCategory, ServerListServer, ServerResponse } from './ServerResponse';
 import { urlParams } from '../utils/functions';
@@ -41,6 +40,7 @@ export class ServerManager {
      * @param query the query to search for
      * @param category the category to search for
      * @param limit the maximum number of servers to return
+     * @param puppeteer whether to use puppeteer to bypass Cloudflare
      * @returns {Promise<ServerListServer[]>}
      * @throws {Error} If the request fails
      * @example const servers = await minehut.servers.getOnlineServers({ query: 'skyblock', limit: 5 });

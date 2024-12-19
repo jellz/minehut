@@ -36,6 +36,9 @@ export interface ServerResponse {
     expired: boolean;
     using_cosmetics: boolean;
     joins: number;
+    boosts: number | null;
+    fmcs_url: string | null;
+    transfers: boolean | null;
 
     daily_online_time: ServerDailyOnlineTime;
     deletion: ServerDeletion;

@@ -1,7 +1,6 @@
 import { MINEHUT_DEV_API_BASE, MINEHUT_API_BASE } from './constants';
 import { ServerManager } from './server/ServerManager';
 import { IconManager } from './icon/IconManager';
-import fetch from 'node-fetch';
 import { SimpleStatsResponse } from './stats/SimpleStatsResponse';
 import { PlayerDistributionResponse } from './stats/PlayerDistributionResponse';
 import { HomePageStatsResponse } from './stats/HomePageStatsResponse';

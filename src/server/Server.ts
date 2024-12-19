@@ -43,6 +43,9 @@ export class Server {
     expired: boolean;
     usingCosmetics: boolean;
     joins: number;
+    boosts: number;
+    fmcsUrl: string | null;
+    transfers: boolean | null;
 
     dailyOnlineTime: Record<string, number>;
     deletion: ServerDeletion;
@@ -85,6 +88,9 @@ export class Server {
         this.expired = server.expired;
         this.usingCosmetics = server.using_cosmetics;
         this.joins = server.joins;
+        this.boosts = server.boosts != null ? server.boosts : 0;
+        this.fmcsUrl = server.fmcs_url
+        this.transfers = server.transfers;
 
         this.dailyOnlineTime = server.daily_online_time;
         this.deletion = server.deletion;
