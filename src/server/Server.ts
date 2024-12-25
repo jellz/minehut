@@ -89,8 +89,8 @@ export class Server {
         this.usingCosmetics = server.using_cosmetics;
         this.joins = server.joins;
         this.boosts = server.boosts != null ? server.boosts : 0;
-        this.fmcsUrl = server.fmcs_url
-        this.transfers = server.transfers;
+        this.fmcsUrl = server.fmcs_url != null ? server.fmcs_url : '';
+        this.transfers = server.transfers != null ? server.transfers : false;
 
         this.dailyOnlineTime = server.daily_online_time;
         this.deletion = server.deletion;
