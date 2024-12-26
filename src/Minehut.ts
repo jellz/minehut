@@ -6,7 +6,7 @@ import { PlayerDistributionResponse } from './stats/PlayerDistributionResponse';
 import { HomePageStatsResponse } from './stats/HomePageStatsResponse';
 import { ResourcePackResponse } from './stats/ResourcePackResponse';
 import { PlayerManager } from './player/PlayerManager';
-import { compareSemanticVersions, getBedrockVersion, MinehutStatus } from './utils/functions';
+import { MinehutStatus } from './utils/functions';
 import { Rank } from './stats/RankResponse';
 
 /**
@@ -164,19 +164,6 @@ export class Minehut {
 		if (!bedrock.ok) data.minecraft_bedrock = 'Offline';
 		const bedrockJson = await bedrock.json();
 		if (!bedrockJson.online) data.minecraft_bedrock = 'Offline';
-
-		// Compare bedrock proxy to latest bedrock version
-		const latestVersion = await getBedrockVersion();
-		if (latestVersion == null) return data;
-
-		if (!bedrockJson.version) {
-			data.bedrock_version = 'Unknown';
-			data.minecraft_bedrock = 'Working';
-		} else if (compareSemanticVersions(bedrockJson.version, latestVersion) == -1) {
-			data.minecraft_bedrock = 'Outdated';
-			data.latest_bedrock_version = latestVersion;
-			data.bedrock_version = bedrockJson.version || '?';
-		}
 
 		return data;
 	}
