@@ -43,7 +43,4 @@ import { Minehut } from './Minehut';
 
     const filteredServers = await minehut.servers.getOnlineServers({ category: 'box', limit: 1 });
     console.log(filteredServers);
-
-    const fetchUsingPupeeteer = await minehut.servers.getOnlineServers({ puppeteer: true });
-    console.log(fetchUsingPupeeteer);
 })();

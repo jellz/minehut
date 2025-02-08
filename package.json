@@ -1,6 +1,6 @@
 {
 	"name": "minehut",
-	"version": "0.0.77",
+	"version": "0.0.78",
 	"description": "TypeScript wrapper for the Minehut HTTP API",
 	"main": "./dist/index.js",
 	"repository": "git@github.com:jellz/minehut",
@@ -22,10 +22,7 @@
 		"dist"
 	],
 	"dependencies": {
-		"node-fetch": "^2.6.0",
-		"puppeteer": "^23.8.0",
-		"puppeteer-extra": "^3.3.6",
-		"puppeteer-extra-plugin-stealth": "^2.11.2"
+		"node-fetch": "^2.6.0"
 	},
 	"devDependencies": {
 		"@types/node-fetch": "^2.5.6",

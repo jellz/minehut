@@ -2,7 +2,6 @@ import { Minehut } from '../Minehut';
 import { Server } from './Server';
 import { CategoryListResponse, CategoryListResponseItem, ServerCategory, ServerListServer, ServerResponse } from './ServerResponse';
 import { urlParams } from '../utils/functions';
-import { handleCloudflare } from '../utils/puppeteer';
 
 /**
  * The Minehut Server Manager
@@ -36,19 +35,14 @@ export class ServerManager {
     /**
      * Get a list of servers.
      * 
-     * Note: Due to the server list endpoint being protected by Cloudflare, this method will only work with the puppeteer option set to true when using Node.js. It will work fine if you are using Bun.
      * @param query the query to search for
      * @param category the category to search for
      * @param limit the maximum number of servers to return
-     * @param puppeteer whether to use puppeteer to bypass Cloudflare
      * @returns {Promise<ServerListServer[]>}
      * @throws {Error} If the request fails
      * @example const servers = await minehut.servers.getOnlineServers({ query: 'skyblock', limit: 5 });
      */
-    async getOnlineServers({ query, category, limit, puppeteer }: { query?: string, category?: ServerCategory, limit?: number, puppeteer?: boolean } = {}) {
-        if (puppeteer) {
-            return (await handleCloudflare({ baseUrl: this.client.API_BASE, path: `/servers?${urlParams({ q: query, category, limit })}` })).servers as ServerListServer[];
-        }
+    async getOnlineServers({ query, category, limit }: { query?: string, category?: ServerCategory, limit?: number } = {}) {
         const res = await fetch(`${this.client.API_BASE}/servers?${urlParams({ q: query, category, limit })}`);
         if (!res.ok) throw new Error(res.statusText);
         const json = await res.json();
