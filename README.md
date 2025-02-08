@@ -33,6 +33,11 @@ async function main() {
 
 For more examples, visit [example.ts](https://github.com/jellz/minehut/blob/master/src/example.ts).
 
+## Notice
+> [!WARNING]
+> Please keep in mind that usage of the API is meant for private use only, and using the API for malicious purposes is not allowed.
+> Please review the [rules](https://minehut.com/rules) and [terms of service](https://minehut.com/terms-of-service) before using the API.
+
 ## Contributing
 Contributions are always welcome!
 
