@@ -13,7 +13,8 @@ Install minehut with [NPM](https://npmjs.com)
 - Get information about a Minehut server.
 - Get a list of online servers.
 - Get information about server icons and categories.
-- Get information about a Minehut player such as their rank, friends, and if they are online.
+- Get information about a Minehut player such as their rank.
+- Generate a random story from Minehut's [Future News](https://minehut.wiki.gg/wiki/Future_News).
 
 ## Basic Usage
 ```ts
@@ -47,5 +48,5 @@ See `contributing.md` for ways to get started.
 [MIT](https://choosealicense.com/licenses/mit/)
 
 ## Contributors
-- [@jellz](https://www.github.com/jellz)
 - [@tarna](https://www.github.com/tarna)
+- [@jellz](https://www.github.com/jellz)

@@ -8,6 +8,7 @@ import { ResourcePackResponse } from './stats/ResourcePackResponse';
 import { PlayerManager } from './player/PlayerManager';
 import { MinehutStatus } from './utils/functions';
 import { Rank } from './stats/RankResponse';
+import { StoryTellerManager } from './storyteller/StoryTellerManager';
 
 /**
  * The Minehut API client
@@ -31,6 +32,11 @@ export class Minehut {
      * @type {PlayerManager}
      */
     players: PlayerManager;
+    /**
+     * The Minehut StoryTeller Manager
+     * @type {StoryTellerManager}
+     */
+    storyTeller: StoryTellerManager;
 
     /**
      * Whether the client is in development mode. 
@@ -51,6 +57,7 @@ export class Minehut {
 		this.icons = new IconManager(this);
 		this.servers = new ServerManager(this);
         this.players = new PlayerManager(this);
+        this.storyTeller = new StoryTellerManager(this);
 	}
 
     /**
