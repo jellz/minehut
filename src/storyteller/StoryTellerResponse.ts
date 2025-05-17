@@ -9,4 +9,4 @@ export interface IdeaGenResponse {
     replacements: Record<CombinationType, string[]>;
 }
 
-export type CombinationType = 'people' | 'sites' | 'things' | 'functions' | 'adj' | 'price' | 'says' | 'badsoft' | 'drama' | 'crash' | 'ban' | 'code' | 'worse' | 'ac1' | 'forks' | 'payment' | 'document' | 'events';
+export type CombinationType = 'people' | 'sites' | 'things' | 'functions' | 'adj' | 'price' | 'says' | 'badsoft' | 'drama' | 'crash' | 'ban' | 'code' | 'worse' | 'ac1' | 'forks' | 'payment' | 'document' | 'events' | 'platforms';
