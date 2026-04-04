@@ -50,6 +50,9 @@ export class Server {
     dailyOnlineTime: Record<string, number>;
     deletion: ServerDeletion;
 
+    serverListFavicon: string | null;
+    serverListMotd: string | null;
+
 	raw: ServerResponse;
 	constructor(client: Minehut, server: ServerResponse) {
 		this.client = client;
@@ -94,6 +97,9 @@ export class Server {
 
         this.dailyOnlineTime = server.daily_online_time;
         this.deletion = server.deletion;
+
+        this.serverListFavicon = server.server_list_favicon;
+        this.serverListMotd = server.server_list_motd;
 
 		this.raw = server;
 	}

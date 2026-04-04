@@ -42,6 +42,9 @@ export interface ServerResponse {
 
     daily_online_time: ServerDailyOnlineTime;
     deletion: ServerDeletion;
+
+    server_list_favicon: string | null;
+    server_list_motd: string | null;
 }
 
 export interface ServerDailyOnlineTime {
