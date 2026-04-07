@@ -3,10 +3,10 @@
 		"resolveJsonModule": true,
 		"experimentalDecorators": true,
 		// "incremental": true,                /* Enable incremental compilation */
-		"target": "es2016",                    /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019' or 'ESNEXT'. */
+		"target": "es2017",                    /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019' or 'ESNEXT'. */
 		"module": "commonjs",                  /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */
 		"lib": [
-			"es2016",
+			"es2017",
             "DOM"
 		],                                     /* Specify library files to be included in the compilation. */
 		// "allowJs": true,                    /* Allow javascript files to be compiled. */
@@ -23,7 +23,7 @@
 		// "alwaysStrict": true,               /* Parse in strict mode and emit "use strict" for each source file. */
 		"noUnusedLocals": true,                /* Report errors on unused locals. */
 		"noUnusedParameters": true,            /* Report errors on unused parameters. */
-    "noFallthroughCasesInSwitch": true,    /* Report errors for fallthrough cases in switch statement. */
+    	"noFallthroughCasesInSwitch": true,    /* Report errors for fallthrough cases in switch statement. */
 		"esModuleInterop": true,               /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
 		"emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
 	}
